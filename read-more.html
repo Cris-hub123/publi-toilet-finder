@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Learn More - PubliToilet</title>
+  <link rel="stylesheet" href="read-more.css" />
+</head>
+<body>
+
+  <!-- Navigation Bar: Dynamically updated by auth.js -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="https://ik.imagekit.io/kwck63nc2/513044424_1499354081036642_8891936477596511379_n.png" alt="PubliToilet Logo" style="height: 40px; vertical-align: middle; margin-right: 8px;">PubliToilet
+      </div>
+      <div class="nav-toggle" onclick="toggleMenu()">☰</div>
+      <ul class="nav-links" id="navLinks">
+        <li class="mobile-nav-profile hidden" id="mobileNavProfile">
+          <a href="user-dashboard.html">
+            <img id="mobileNavProfilePicture" src="https://placehold.co/30x30/dce6f9/051747?text=U" alt="Profile">
+            <span id="mobileNavUserName">User</span>
+          </a>
+          <div class="mobile-profile-menu hidden" id="mobileProfileMenu">
+            <a href="user-dashboard.html">Dashboard</a>
+            <a href="#" onclick="logoutUser()">Logout</a>
+          </div>
+        </li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="add-new-toilet.html">Add New Toilet</a></li>
+        <li><a href="volunteer-page.html">Volunteer Help</a></li>
+        <li><a href="about-us.html">About</a></li>
+      </ul>
+      <div class="nav-buttons" id="auth-buttons">
+        <a href="login.html" class="btn-outline">Log in</a>
+        <a href="signup.html" class="btn-solid">Sign up</a>
+      </div>
+      <div class="navbar-profile-avatar hidden" id="navbarProfileAvatar">
+        <img id="navbarProfilePicture" src="https://placehold.co/40x40/dce6f9/051747?text=U" alt="Profile">
+        <div class="profile-dropdown-menu hidden" id="profileDropdownMenu">
+          <a href="user-dashboard.html">Dashboard</a>
+          <a href="#" onclick="logoutUser()">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <img src="https://i.postimg.cc/BvtYfGGN/Header.png" alt="Main Banner" class="banner-image" />
+
+  <div class="card-section">
+    <div class="custom-card">
+      <img src="https://humanitarianglobal.com/wp-content/uploads/2022/02/A-person-washing-their-hands.jpg" alt="Hygiene Image">
+      <div class="custom-card-content">
+        <h3>Why Hygiene and Sanitation Matter?</h3>
+        <p>Sanitation and hygiene are crucial for everyone since they aid in the maintenance of health and the extension of life spans...</p>
+        <a href="https://humanitarianglobal.com/the-importance-of-hygiene-sanitation/" class="more-info-btn" target="_blank">More Info →</a>
+      </div>
+    </div>
+
+    <div class="custom-card">
+      <img src="https://i.postimg.cc/htGLYbLq/Read.png" alt="SDG 6 Image">
+      <div class="custom-card-content">
+        <h3>What is SDG 6?</h3>
+        <p>SDG 6 is necessary for the public’s human health. Human health is directly influenced by access to clean water and sanitation...</p>
+        <a href="https://www.un.org/sustainabledevelopment/water-and-sanitation/" class="more-info-btn" target="_blank">More Info →</a>
+      </div>
+    </div>
+
+    <div class="custom-card">
+      <img src="https://i.postimg.cc/XNc97Dxb/Toilet.png" alt="Our Website Image">
+      <div class="custom-card-content">
+        <h3>How Our Website Helps Promote SDG 6?</h3>
+        <p>Our website helps promote Sustainable Development Goal 6 (SDG 6) by improving access to better sanitation...</p>
+        <a href="learnmore.html" class="more-info-btn">More Info →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="targets-section">
+    <h2><span class="highlight">SDG 6:</span> Targets and Their Importance</h2>
+    <div class="target-group">
+      <div class="target-item">
+        <div class="target-number">1.</div>
+        <div class="target-title">Target 6.1</div>
+        <p>“By 2030, achieve universal and equitable access to safe and affordable drinking water for all.”</p>
+      </div>
+      <div class="target-item">
+        <div class="target-number">2.</div>
+        <div class="target-title">Target 6.2</div>
+        <p>“By 2030, achieve access to adequate and equitable sanitation and hygiene for all and end open defecation...”</p>
+      </div>
+      <div class="target-item">
+        <div class="target-number">3.</div>
+        <div class="target-title">Target 6.3</div>
+        <p>“By 2030, improve water quality by reducing pollution, eliminating dumping and minimizing hazardous materials...”</p>
+      </div>
+      <div class="target-item">
+        <div class="target-number">4.</div>
+        <div class="target-title">Target 6.4</div>
+        <p>“By 2030, substantially increase water-use efficiency... address water scarcity...”</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="didyouknow">
+    <h2>Did You Know?</h2>
+    <div class="facts">
+      <div class="fact">
+        <img src="https://data.unicef.org/wp-content/uploads/2023/07/UNI398386.jpg" alt="Fact 1">
+        <p>1 in 4 people worldwide still lack access to safe drinking water</p>
+      </div>
+      <div class="fact">
+        <img src="https://media.npr.org/assets/img/2023/03/22/ap23081423263463_custom-bbbf9a0063104227acc2eb613a49e66055807977.jpg" alt="Fact 2">
+        <p>3.6 billion people lack access to adequate sanitation.</p>
+      </div>
+      <div class="fact">
+        <img src="https://earth.org/wp-content/uploads/2022/02/Untitled-design-2022-02-21T125712.140-1200x900.jpg" alt="Fact 3">
+        <p>Water scarcity affects 4 billion people for at least one month every year.</p>
+      </div>
+      <div class="fact">
+        <img src="https://sa.kapamilya.com/absnews/abscbnnews/media/2023/life/03/20/20230305-water-interruption-pasay-md-5.jpg" alt="Fact 4">
+        <p>7 million Filipinos still rely on unsafe sanitation facilities or have no toilet at all.</p>
+      </div>
+      <div class="fact">
+        <img src="https://i.postimg.cc/66YLfmZh/FLOOD.png" alt="Fact 5">
+        <p>Sanitation-related diseases cause major health problems, especially during the rainy seasons.</p>
+      </div>
+      <div class="fact">
+        <img src="https://media.assettype.com/sunstar%2Fimport%2Fuploads%2Fimages%2F2019%2F04%2F05%2F136423.jpg" alt="Fact 6">
+        <p>Public Toilets in urban areas are often inadequate, leading to health risks and environmental concerns.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 PubliToilet. All rights reserved.
+  </footer>
+
+  <script src="auth.js"></script>
+</body>
+</html>

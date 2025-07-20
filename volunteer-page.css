@@ -1,0 +1,537 @@
+:root {
+  --light: #FEFEFE;
+  --light-gray: #E7E9F0;
+  --dark-blue: #051747;
+  --steel-blue: #535F80;
+  --mid-blue: #081F62;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--light);
+  color: var(--dark-blue);
+  line-height: 1.6;
+}
+
+/* NAVIGATION BAR */
+.navbar {
+  background-color: var(--mid-blue);
+  color: white;
+  padding: 12px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Added shadow for consistency with sticky nav */
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.nav-logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.nav-logo i {
+  font-size: 1.2rem;
+}
+
+.nav-toggle {
+  display: none; /* Hidden by default on larger screens */
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: white; /* Added color for consistency */
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  align-items: center; /* Keep this for vertical alignment */
+  flex-wrap: wrap; /* Keep this for responsiveness */
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px; /* Updated padding */
+    border-radius: 8px; /* Updated border-radius */
+    transition: background-color 0.3s ease;
+    display: block; /* Ensure the padding applies correctly */
+    font-weight: 500; /* Keep font-weight */
+}
+
+.nav-links li a:hover {
+    background-color: var(--steel-blue);
+}
+
+/* Dropdown menu styles (if any dropdown is needed for the home page, otherwise can be removed or kept as is) */
+.nav-links .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 38px;
+  left: 0;
+  background-color: var(--dark-blue);
+  border-radius: 5px;
+  overflow: hidden;
+  min-width: 160px;
+  z-index: 1000;
+}
+
+.dropdown-menu li a {
+  padding: 10px 15px;
+  white-space: nowrap;
+}
+
+.dropdown.active .dropdown-menu {
+  display: block;
+}
+
+
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-outline, .btn-solid { /* Combined for common styles, then overridden */
+    padding: 8px 15px; /* Adjusted padding */
+    border-radius: 8px; /* Adjusted border-radius */
+    text-decoration: none;
+    font-weight: 600; /* Adjusted font-weight */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: center; /* Added for consistency */
+    white-space: nowrap; /* Prevent text wrapping */
+    cursor: pointer; /* Ensure button has pointer cursor */
+}
+
+.btn-outline {
+    border: 2px solid white;
+    color: white;
+    background-color: transparent;
+}
+
+.btn-outline:hover {
+    background-color: white;
+    color: var(--mid-blue);
+}
+
+.btn-solid {
+    background-color: #ffffff; /* A warm tone from About Us page, adopted from User dashboard.css */
+    color: var(--dark-blue); /* Adopted from User dashboard.css */
+    border: none;
+}
+
+.btn-solid:hover {
+    background-color: #f0f0f0; /* Darker shade on hover */
+}
+
+/* Navbar Profile Avatar (Desktop) */
+.navbar-profile-avatar {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: visible;
+    cursor: pointer;
+    border: 2px solid white;
+    transition: transform 0.2s ease;
+    display: block;
+}
+
+.navbar-profile-avatar:hover {
+    transform: scale(1.1);
+}
+
+.navbar-profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 50%;
+}
+
+/* Profile Dropdown Menu (Desktop) */
+.profile-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--mid-blue);
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    z-index: 100;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+
+.navbar-profile-avatar:hover .profile-dropdown-menu,
+.profile-dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.profile-dropdown-menu a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    transition: background-color 0.2s ease;
+}
+
+.profile-dropdown-menu a:hover {
+    background-color: var(--steel-blue);
+}
+
+/* Mobile Nav Profile Avatar (inside hamburger menu) */
+.mobile-nav-profile {
+    display: none;
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.mobile-nav-profile a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    justify-content: center;
+}
+
+.mobile-nav-profile img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid white;
+}
+
+/* Mobile Profile Menu (inside hamburger menu) */
+.mobile-profile-menu {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease, visibility 0.3s;
+}
+
+.mobile-profile-menu.active {
+    max-height: 100px; /* Adjust as needed to fit content */
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-profile-menu a {
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.mobile-profile-menu a:hover {
+    background-color: var(--steel-blue);
+}
+
+/* Utility class for hiding elements */
+.hidden {
+    display: none !important;
+}
+
+/* MOBILE NAVIGATION */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+    display: none;
+    background-color: var(--mid-blue);
+    margin-top: 10px;
+    gap: 0;
+  }
+
+  .navbar.expanded .nav-links {
+    display: flex;
+  }
+  
+  .navbar.expanded .nav-links .mobile-nav-profile {
+      display: flex;
+  }
+
+  .navbar.expanded .nav-links .navbar-profile-avatar {
+      display: none;
+  }
+
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .dropdown-menu {
+    position: static;
+  }
+
+  .nav-buttons {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px 0;
+    gap: 10px;
+  }
+
+  .navbar.expanded .nav-buttons {
+    display: flex;
+  }
+
+  .btn-outline, .btn-solid {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+/* ORIGINAL VOLUNTEER STYLES — UNTOUCHED BELOW */
+header {
+  background: url('https://uploads.donorperfect.com/images/sites/3/volunteer-matrix-header-1.jpg') center/cover no-repeat;
+  color: white;
+  text-align: center;
+  padding: 100px 20px 60px;
+}
+
+header h1 {
+  margin-bottom: 10px;
+  font-size: 2.8rem;
+  font-weight: bold;
+}
+
+header p {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.card {
+  display: flex;
+  align-items: stretch;
+  background-color: var(--light-gray);
+  margin-bottom: 30px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-img {
+  width: 40%;
+  min-height: 220px;
+  background-size: cover;
+  background-position: center;
+}
+
+.card-text {
+  flex: 1;
+  padding: 30px;
+  background-color: #D0E9FF;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-text h3 {
+  margin-bottom: 10px;
+  color: var(--mid-blue);
+  font-size: 1.6rem;
+}
+
+.card-text p {
+  font-size: 1rem;
+}
+
+.volunteer-form-card {
+  background: linear-gradient(120deg, #f6f9fe 60%, #e7e9f0 100%);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(8, 31, 98, 0.13), 0 1.5px 0 #e7e9f0 inset;
+  border: 1.5px solid #e7e9f0;
+  padding: 38px 38px 32px 38px;
+  margin: 40px auto 36px auto;
+  max-width: 1200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.volunteer-form-card::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, #e7e9f0 60%, transparent 100%);
+  opacity: 0.7;
+  z-index: 0;
+}
+
+.volunteer-form-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #081F62;
+  margin-bottom: 18px;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 0 #fff, 0 0px 2px #dbeafe;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.volunteer-form-title i {
+  color: #005792;
+  font-size: 1.2em;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.volunteer-form {
+  margin-top: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.volunteer-form .form-group {
+  margin-bottom: 20px;
+}
+
+.volunteer-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #081F62;
+}
+
+.volunteer-form textarea,
+.volunteer-form input[type="text"],
+.volunteer-form input[type="email"],
+.volunteer-form select {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1.5px solid #c9d6f3;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: #f8fbff;
+  color: #051747;
+  resize: vertical;
+  box-shadow: 0 1px 4px rgba(8,31,98,0.04);
+}
+
+.volunteer-form textarea:focus,
+.volunteer-form input[type="text"]:focus,
+.volunteer-form input[type="email"]:focus,
+.volunteer-form select:focus {
+  outline: none;
+  border-color: #005792;
+  background: #fff;
+}
+
+.volunteer-form button[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  font-size: 1.08rem;
+  background: linear-gradient(90deg, #4e7cf7 0%, #081f62 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+  box-shadow: 0 2px 8px rgba(8, 31, 98, 0.08);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.volunteer-form button[type="submit"]:hover {
+  background: #fff;
+  color: #4e7cf7;
+  box-shadow: 0 4px 16px rgba(8, 31, 98, 0.13);
+  border: 2px solid #4e7cf7;
+}
+
+/* FOOTER STYLES */
+footer {
+  position:relative;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  z-index: 1;
+  background-color: var(--dark-blue);
+  color: white;
+  text-align: center;
+  padding: 20px 0 16px 0;
+  font-size: 0.9rem;
+  margin: 0;
+  box-shadow: 0 -2px 8px rgba(8,31,98,0.08);
+  pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+  }
+
+  .card-img {
+    width: 100%;
+    height: 200px;
+  }
+}
+
+@media (max-width: 600px) {
+  .volunteer-form-card {
+    padding: 18px 8px 14px 8px;
+    border-radius: 10px;
+    max-width: 98vw;
+  }
+  .volunteer-form-title {
+    font-size: 1.08rem;
+  }
+}

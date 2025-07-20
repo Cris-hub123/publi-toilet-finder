@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PubliToilet – Promote SDG 6</title>
+<link rel="stylesheet" href="learnmore.css" />
+</head>
+<body>
+<!-- Navigation Bar: Dynamically updated by auth.js -->
+<nav class="navbar" id="navbar">
+      <div class="nav-container">
+          <div class="nav-logo">
+              <img src="https://ik.imagekit.io/kwck63nc2/513044424_1499354081036642_8891936477596511379_n.png" alt="PubliToilet Logo" style="height: 40px; vertical-align: middle; margin-right: 8px;">PubliToilet
+          </div>
+          <div class="nav-toggle" onclick="toggleMenu()">☰</div>
+          <ul class="nav-links">
+              <li class="mobile-nav-profile hidden" id="mobileNavProfile">
+                  <a href="user-dashboard.html">
+                      <img id="mobileNavProfilePicture" src="https://placehold.co/30x30/dce6f9/051747?text=U" alt="Profile">
+                      <span id="mobileNavUserName">User</span>
+                  </a>
+                  <div class="mobile-profile-menu hidden" id="mobileProfileMenu">
+                      <a href="user-dashboard.html">Dashboard</a>
+                      <a href="#" onclick="logoutUser()">Logout</a>
+                  </div>
+              </li>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="add-new-toilet.html">Add New Toilet</a></li>
+              <li><a href="volunteer-page.html">Volunteer Help</a></li>
+              <li><a href="about-us.html">About</a></li>
+          </ul>
+          <div class="nav-buttons" id="auth-buttons">
+              <a href="login.html" class="btn-outline">Log in</a>
+              <a href="signup.html" class="btn-solid">Sign up</a>
+          </div>
+          <div class="navbar-profile-avatar hidden" id="navbarProfileAvatar">
+              <img id="navbarProfilePicture" src="https://placehold.co/40x40/dce6f9/051747?text=U" alt="Profile">
+              <div class="profile-dropdown-menu hidden" id="profileDropdownMenu">
+                  <a href="user-dashboard.html">Dashboard</a>
+                  <a href="#" onclick="logoutUser()">Logout</a>
+              </div>
+          </div>
+      </div>
+  </nav>
+
+<div class="hero-wrapper">
+  <!-- WAVY DIVIDER -->
+  <div class="wave-divider">
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+      <path fill="#273980" d="M0,64 C480,160 960,0 1440,96 L1440,0 L0,0 Z" />
+    </svg>
+  </div>
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-left">
+        <h1>How Our Website Helps Promote <span class="highlight-blue">SDG 6</span></h1>
+        <p><strong>PubliToilet</strong> supports Sustainable Development Goal 6: Clean Water and Sanitation by improving access to clean, inclusive, and well-maintained public restrooms through the following initiatives:</p>
+      </div>
+      <div class="hero-right">
+        <img src="https://i.postimg.cc/KYR8JyqN/Home-Page.png" alt="SDG 6 Header Image" class="hero-image" />
+      </div>
+    </div>
+  </section>
+</div>
+<!-- CONTENT SECTION -->
+<section class="content-section">
+  <div class="content-container">
+    <div class="grid-container">
+      <div class="grid-item">
+        <p><span class="highlight-blue">Improving Access to Safe Sanitation</span><br>
+        We help users find nearby public toilets via an interactive map, reducing open defecation and promoting proper hygiene practices.</p>
+      </div>
+      <div class="grid-item">
+        <p><span class="highlight-blue">Empowering Communities</span><br>
+        Users can report maintenance issues and rate cleanliness, helping local governments uphold sanitation standards.</p>
+      </div>
+      <div class="grid-item">
+        <p><span class="highlight-blue">Inclusive Access for All</span><br>
+        Filters support PWD-friendly, gender-neutral, and accessible restrooms for everyone in the community.</p>
+      </div>
+      <div class="grid-item">
+        <p><span class="highlight-blue">Hygiene Education</span><br>
+        Educational content on hygiene, water conservation, and public health is integrated throughout the site.</p>
+      </div>
+      <div class="grid-item">
+        <p><span class="highlight-blue">SDG 6 Alignment</span><br>
+        Directly contributes to Targets 6.1 to 6.4 including water safety, inclusivity, pollution reduction, and efficient water use.</p>
+      </div>
+      <div class="grid-item">
+        <p><span class="highlight-blue">Tech for Public Good</span><br>
+        This prototype uses local storage, but a full version would use a robust backend to connect users with essential sanitation services in real time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  &copy; 2025 PubliToilet. All rights reserved.
+</footer>
+
+<script src="auth.js"></script>
+
+</body>

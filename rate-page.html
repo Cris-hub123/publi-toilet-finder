@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rate This Toilet - PubliToilet</title>
+  <link rel="stylesheet" href="rate-page.css" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+
+    <!-- Navigation Bar: Dynamically updated by auth.js -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://ik.imagekit.io/kwck63nc2/513044424_1499354081036642_8891936477596511379_n.png" alt="PubliToilet Logo" style="height: 40px; vertical-align: middle; margin-right: 8px;"> PubliToilet
+            </div>
+            <div class="nav-toggle" onclick="toggleMenu()">☰</div>
+            <ul class="nav-links">
+                <li class="mobile-nav-profile hidden" id="mobileNavProfile">
+                    <a href="user-dashboard.html">
+                        <img id="mobileNavProfilePicture" src="https://placehold.co/30x30/dce6f9/051747?text=U" alt="Profile">
+                        <span id="mobileNavUserName">User</span>
+                    </a>
+                    <div class="mobile-profile-menu hidden" id="mobileProfileMenu">
+                        <a href="user-dashboard.html">Dashboard</a>
+                        <a href="#" onclick="logoutUser()">Logout</a>
+                    </div>
+                </li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="add-new-toilet.html" onclick="navigateToAddToToilet()">Add New Toilet</a></li>
+                <li><a href="volunteer-page.html">Volunteer Help</a></li>
+                <li><a href="about-us.html">About</a></li>
+            </ul>
+            <div class="nav-buttons" id="auth-buttons">
+                <a href="login.html" class="btn-outline">Log in</a>
+                <a href="signup.html" class="btn-solid">Sign up</a>
+            </div>
+            <div class="navbar-profile-avatar hidden" id="navbarProfileAvatar">
+                <img id="navbarProfilePicture" src="https://placehold.co/40x40/dce6f9/051747?text=U" alt="Profile">
+                <div class="profile-dropdown-menu hidden" id="profileDropdownMenu">
+                    <a href="user-dashboard.html">Dashboard</a>
+                    <a href="#" onclick="logoutUser()">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="rate-content">
+        <header class="header-banner">
+            <div class="header-content">
+                <h1>Rate This Toilet</h1>
+                <p>Your feedback helps us improve public toilet and sanitation.</p>
+            </div>
+        </header>
+
+        <div id="toiletMap" style="height: 350px; width: 100%;"></div>
+
+        <div class="rate-card-container">
+            <div class="rate-card">
+                <div class="rate-title">
+                    <i class="fas fa-toilet"></i>
+                    <span id="toiletName">Loading Toilet Name...</span>
+                </div>
+                <div class="rate-details">
+                    <span class="location"><i class="fas fa-map-marker-alt"></i> <span id="toiletLocation">Loading Location...</span></span>
+                    <span class="visited-on"><i class="fas fa-calendar-alt"></i> Visited: <span id="visitedDate"></span></span>
+                </div>
+                <a href="recentvisit.html" class="recent-button">← Back to Recently Visited Toilets</a>
+                <form id="rateForm" class="rate-form">
+                    <!-- Restored Form Fields -->
+                    <div class="form-group">
+                        <label>Cleanliness Rating</label>
+                        <div class="emoji-rating">
+                          <input type="radio" id="clean5" name="cleanliness" value="5" required><label for="clean5">😍</label>
+                          <input type="radio" id="clean4" name="cleanliness" value="4"><label for="clean4">😊</label>
+                          <input type="radio" id="clean3" name="cleanliness" value="3"><label for="clean3">😐</label>
+                          <input type="radio" id="clean2" name="cleanliness" value="2"><label for="clean2">😟</label>
+                          <input type="radio" id="clean1" name="cleanliness" value="1"><label for="clean1">😠</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="maintained">Is the facility properly maintained?</label>
+                        <select id="maintained" name="maintained" required>
+                          <option value="">Choose an option</option>
+                          <option value="yes">Yes</option>
+                          <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Accessibility Features</label>
+                        <div class="checkbox-group">
+                            <label class="inline"><input type="checkbox" name="features" value="Wheelchair Accessible"> Wheelchair Accessible</label>
+                            <label class="inline"><input type="checkbox" name="features" value="Has Grab Bars"> Has Grab Bars</label>
+                            <label class="inline"><input type="checkbox" name="features" value="Gender-Neutral Toilet"> Gender-Neutral Toilet</label>
+                            <label class="inline"><input type="checkbox" name="features" value="Baby Changing Station"> Baby Changing Station</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="water">Water Availability</label>
+                        <select id="water" name="water" required>
+                          <option value="">Choose an option</option>
+                          <option value="available">Available</option>
+                          <option value="not-available">Not Available</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Water Quality Rating</label>
+                        <div class="star-rating">
+                          <input type="radio" id="star5" name="water-quality" value="5" required><label for="star5">★</label>
+                          <input type="radio" id="star4" name="water-quality" value="4"><label for="star4">★</label>
+                          <input type="radio" id="star3" name="water-quality" value="3"><label for="star3">★</label>
+                          <input type="radio" id="star2" name="water-quality" value="2"><label for="star2">★</label>
+                          <input type="radio" id="star1" name="water-quality" value="1"><label for="star1">★</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="comments">Additional Comments</label>
+                        <textarea id="comments" rows="4" placeholder="Type your feedback here..."></textarea>
+                    </div>
+                    <button type="submit">Submit Feedback</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="error-content" class="hidden" style="text-align: center; padding: 50px;">
+        <h2>Toilet Not Found</h2>
+        <p>We couldn't find the toilet you're trying to rate. Please go back and select a valid toilet.</p>
+        <a href="index.html" class="btn-solid" style="background-color: var(--mid-blue); color: white;">Back to Home</a>
+    </div>
+
+    <footer>
+        &copy; 2025 PubliToilet. All rights reserved.
+    </footer>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="auth.js"></script>
+    <script src="rate-page.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = getLoggedInUser && getLoggedInUser();
+            if (!user) {
+                showMessage('You must be logged in to rate a toilet.', true);
+                setTimeout(() => {
+                    window.location.href = `login.html?redirect=${encodeURIComponent(window.location.href)}`;
+                }, 2000);
+                return;
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const toiletId = urlParams.get('toiletId');
+            const allToilets = JSON.parse(localStorage.getItem('toilets')) || [];
+            const toiletToRate = allToilets.find(t => t.id === toiletId);
+
+            if (!toiletToRate) {
+                document.getElementById('rate-content').classList.add('hidden');
+                document.getElementById('error-content').classList.remove('hidden');
+                return;
+            }
+
+            document.getElementById('toiletName').textContent = toiletToRate.name;
+            document.getElementById('toiletLocation').textContent = toiletToRate.address;
+            document.getElementById('visitedDate').textContent = new Date().toLocaleDateString();
+
+            const map = L.map('toiletMap').setView(toiletToRate.coordinates, 17);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+            L.marker(toiletToRate.coordinates)
+                .addTo(map)
+                .bindPopup(`<b>${toiletToRate.name}</b><br>You are rating this toilet.`)
+                .openPopup();
+            setTimeout(() => map.invalidateSize(), 100);
+
+            const rateForm = document.getElementById('rateForm');
+            rateForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const cleanlinessRatingInput = document.querySelector('input[name="cleanliness"]:checked');
+                if (!cleanlinessRatingInput) {
+                    showMessage('Please select a cleanliness rating.', true);
+                    return;
+                }
+                
+                // In a real application, you would save all the form fields.
+                // For this prototype, we will focus on updating the main rating.
+                const newRating = parseInt(cleanlinessRatingInput.value);
+                const toiletIndex = allToilets.findIndex(t => t.id === toiletId);
+
+                if (toiletIndex !== -1) {
+                    const toilet = allToilets[toiletIndex];
+                    const currentTotalRating = (toilet.rating || 0) * (toilet.numberOfRatings || 0);
+                    const currentNumberOfRatings = toilet.numberOfRatings || 0;
+                    const newNumberOfRatings = currentNumberOfRatings + 1;
+                    const newTotalRating = currentTotalRating + newRating;
+                    const newAverageRating = newTotalRating / newNumberOfRatings;
+
+                    allToilets[toiletIndex].rating = parseFloat(newAverageRating.toFixed(2));
+                    allToilets[toiletIndex].numberOfRatings = newNumberOfRatings;
+
+                    localStorage.setItem('toilets', JSON.stringify(allToilets));
+                    showMessage('Thank you for your feedback! Your rating has been submitted.');
+
+                    setTimeout(() => {
+                        window.location.href = 'user-dashboard.html';
+                    }, 2000);
+                } else {
+                    showMessage('An error occurred while submitting your rating.', true);
+                }
+            });
+        });
+    </script>
+
+// Add this to homepage, rate-page, report-page, volunteer-page, about-us, etc.
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get logged in user from localStorage
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const loggedInEmail = localStorage.getItem('loggedInUser');
+    const user = users.find(u => u.email === loggedInEmail);
+
+    const authButtons = document.getElementById('auth-buttons');
+    const navbarProfileAvatar = document.getElementById('navbarProfileAvatar');
+    const mobileNavProfile = document.getElementById('mobileNavProfile');
+    const mobileNavProfilePicture = document.getElementById('mobileNavProfilePicture');
+    const mobileNavUserName = document.getElementById('mobileNavUserName');
+    const navbarProfilePicture = document.getElementById('navbarProfilePicture');
+
+    if (user) {
+        // Hide login/signup buttons
+        if (authButtons) authButtons.classList.add('hidden');
+        // Show profile avatar
+        if (navbarProfileAvatar) navbarProfileAvatar.classList.remove('hidden');
+        if (mobileNavProfile) mobileNavProfile.classList.remove('hidden');
+        // Set profile picture and name
+        if (navbarProfilePicture) navbarProfilePicture.src = user.profilePictureUrl;
+        if (mobileNavProfilePicture) mobileNavProfilePicture.src = user.profilePictureUrl;
+        if (mobileNavUserName) mobileNavUserName.textContent = user.username;
+    } else {
+        // Show login/signup buttons
+        if (authButtons) authButtons.classList.remove('hidden');
+        // Hide profile avatar
+        if (navbarProfileAvatar) navbarProfileAvatar.classList.add('hidden');
+        if (mobileNavProfile) mobileNavProfile.classList.add('hidden');
+    }
+});
+</script>
+
+</body>
+</html>

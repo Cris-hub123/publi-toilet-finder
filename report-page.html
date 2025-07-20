@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Report This Toilet - PubliToilet</title>
+    <link rel="stylesheet" href="report-page.css" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+
+    <!-- Navigation Bar: Dynamically updated by auth.js -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://ik.imagekit.io/kwck63nc2/513044424_1499354081036642_8891936477596511379_n.png" alt="PubliToilet Logo" style="height: 40px; vertical-align: middle; margin-right: 8px;"> PubliToilet
+            </div>
+            <div class="nav-toggle" onclick="toggleMenu()">☰</div>
+            <ul class="nav-links">
+                <li class="mobile-nav-profile hidden" id="mobileNavProfile">
+                    <a href="user-dashboard.html">
+                        <img id="mobileNavProfilePicture" src="https://placehold.co/30x30/dce6f9/051747?text=U" alt="Profile">
+                        <span id="mobileNavUserName">User</span>
+                    </a>
+                    <div class="mobile-profile-menu hidden" id="mobileProfileMenu">
+                        <a href="user-dashboard.html">Dashboard</a>
+                        <a href="#" onclick="logoutUser()">Logout</a>
+                    </div>
+                </li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="add-new-toilet.html" onclick="navigateToAddToilet()">Add New Toilet</a></li>
+                <li><a href="volunteer-page.html">Volunteer Help</a></li>
+                <li><a href="about-us.html">About</a></li>
+            </ul>
+            <div class="nav-buttons" id="auth-buttons">
+                <a href="login.html" class="btn-outline">Log in</a>
+                <a href="signup.html" class="btn-solid">Sign up</a>
+            </div>
+            <div class="navbar-profile-avatar hidden" id="navbarProfileAvatar">
+                <img id="navbarProfilePicture" src="https://placehold.co/40x40/dce6f9/051747?text=U" alt="Profile">
+                <div class="profile-dropdown-menu hidden" id="profileDropdownMenu">
+                    <a href="user-dashboard.html">Dashboard</a>
+                    <a href="#" onclick="logoutUser()">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="report-content">
+        <header class="header-banner">
+            <div class="header-content">
+                <h1><i class="fas fa-flag"></i>Report a Toilet Issue</h1>
+                <p>Help us maintain clean and functional public toilets by reporting any issues you encounter.</p>
+            </div>
+        </header>
+
+        <div id="toiletMap" style="height: 350px; width: 100%;"></div>
+
+        <div class="report-card-container">
+            <div class="report-card">
+                <div class="report-title">
+                    <i class="fas fa-toilet"></i>
+                    <span id="toiletName">Loading Toilet Name...</span>
+                </div>
+                <div class="report-details">
+                    <span class="location"><i class="fas fa-map-marker-alt"></i> <span id="toiletLocation">Loading Location...</span></span>
+                    <span class="date-reported"><i class="fas fa-calendar-alt"></i> Reporting Date: <span id="reportDate"></span></span>
+                </div>
+                <a href="recent-visit.html" class="recent-button">← Back to Recently Visited Toilets</a>
+                <form id="reportForm" class="report-form">
+                    <!-- Restored Form Fields -->
+                    <div class="form-group">
+                        <label for="issue">Describe the Issue</label>
+                        <textarea id="issue" rows="4" placeholder="Describe the problem..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Issue Category</label>
+                        <select id="category" required>
+                          <option value="">Choose an option</option>
+                          <option value="Cleanliness">Cleanliness</option>
+                          <option value="Damage">Damage</option>
+                          <option value="No Supplies">No Supplies</option>
+                          <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="photo">Upload Photo (optional)</label>
+                        <input type="file" id="photo"/>
+                    </div>
+                    <button type="submit">Submit Report</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="error-content" class="hidden" style="text-align: center; padding: 50px;">
+        <h2>Toilet Not Found</h2>
+        <p>We couldn't find the toilet you're trying to report. Please go back to the home page and select a valid toilet.</p>
+        <a href="index.html" class="btn-solid" style="background-color: var(--mid-blue); color: white;">Back to Home</a>
+    </div>
+    
+    <div class="volunteer-section">
+        <h2>Want to Help Maintain Clean Toilets?</h2>
+        <p>Join our volunteer community and make a difference by helping us monitor and improve public toilet facilities in your area.</p>
+        <a href="volunteer-page.html">Become a Volunteer</a>
+    </div>
+
+    <footer>
+        &copy; 2025 PubliToilet. All rights reserved.
+    </footer>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="auth.js"></script>
+    <script src="report-page.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = getLoggedInUser && getLoggedInUser();
+            if (!user) {
+                showMessage('You must be logged in to report an issue.', true);
+                setTimeout(() => {
+                    window.location.href = `login.html?redirect=${encodeURIComponent(window.location.href)}`;
+                }, 2000);
+                return;
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const toiletId = urlParams.get('toiletId');
+            const allToilets = JSON.parse(localStorage.getItem('toilets')) || [];
+            const toiletToReport = allToilets.find(t => t.id === toiletId);
+
+            if (!toiletToReport) {
+                document.getElementById('report-content').classList.add('hidden');
+                document.getElementById('error-content').classList.remove('hidden');
+                return;
+            }
+
+            document.getElementById('toiletName').textContent = toiletToReport.name;
+            document.getElementById('toiletLocation').textContent = toiletToReport.address;
+            document.getElementById('reportDate').textContent = new Date().toLocaleDateString();
+
+            const map = L.map('toiletMap').setView(toiletToReport.coordinates, 17);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+            L.marker(toiletToReport.coordinates)
+                .addTo(map)
+                .bindPopup(`<b>${toiletToReport.name}</b><br>You are reporting this toilet.`)
+                .openPopup();
+            setTimeout(() => map.invalidateSize(), 100);
+
+            const reportForm = document.getElementById('reportForm');
+            reportForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const issueDescription = document.getElementById('issue').value;
+                const issueCategory = document.getElementById('category').value;
+
+                if (!issueCategory) {
+                    showMessage('Please select an issue category.', true);
+                    return;
+                }
+
+                const newReport = {
+                    id: 'r' + Date.now(),
+                    toiletId: toiletToReport.id,
+                    toiletName: toiletToReport.name,
+                    issue: issueDescription,
+                    category: issueCategory,
+                    dateSubmitted: new Date().toISOString(),
+                    submittedBy: user.email,
+                    status: 'unresolved',
+                    adminResponse: ''
+                };
+
+                const reports = JSON.parse(localStorage.getItem('reports')) || [];
+                reports.push(newReport);
+                localStorage.setItem('reports', JSON.stringify(reports));
+
+                showMessage('Report submitted successfully! Thank you for your help.');
+                setTimeout(() => {
+                    window.location.href = 'user-dashboard.html';
+                }, 2000);
+            });
+        });
+    </script>
+
+// Add this to homepage, rate-page, report-page, volunteer-page, about-us, etc.
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get logged in user from localStorage
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const loggedInEmail = localStorage.getItem('loggedInUser');
+    const user = users.find(u => u.email === loggedInEmail);
+
+    const authButtons = document.getElementById('auth-buttons');
+    const navbarProfileAvatar = document.getElementById('navbarProfileAvatar');
+    const mobileNavProfile = document.getElementById('mobileNavProfile');
+    const mobileNavProfilePicture = document.getElementById('mobileNavProfilePicture');
+    const mobileNavUserName = document.getElementById('mobileNavUserName');
+    const navbarProfilePicture = document.getElementById('navbarProfilePicture');
+
+    if (user) {
+        // Hide login/signup buttons
+        if (authButtons) authButtons.classList.add('hidden');
+        // Show profile avatar
+        if (navbarProfileAvatar) navbarProfileAvatar.classList.remove('hidden');
+        if (mobileNavProfile) mobileNavProfile.classList.remove('hidden');
+        // Set profile picture and name
+        if (navbarProfilePicture) navbarProfilePicture.src = user.profilePictureUrl;
+        if (mobileNavProfilePicture) mobileNavProfilePicture.src = user.profilePictureUrl;
+        if (mobileNavUserName) mobileNavUserName.textContent = user.username;
+    } else {
+        // Show login/signup buttons
+        if (authButtons) authButtons.classList.remove('hidden');
+        // Hide profile avatar
+        if (navbarProfileAvatar) navbarProfileAvatar.classList.add('hidden');
+        if (mobileNavProfile) mobileNavProfile.classList.add('hidden');
+    }
+});
+</script>
+
+</body>
+</html>

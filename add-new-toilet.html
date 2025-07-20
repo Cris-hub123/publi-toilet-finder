@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Toilet - PubliToilet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS -->
+    <link rel="stylesheet" href="add-new-toilet.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="auth.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://ik.imagekit.io/kwck63nc2/513044424_1499354081036642_8891936477596511379_n.png" alt="PubliToilet Logo" style="height: 40px; vertical-align: middle; margin-right: 8px;">PubliToilet
+            </div>
+            <div class="nav-toggle" onclick="toggleMenu()">☰</div>
+            <ul class="nav-links" id="navLinks">
+                <li class="mobile-nav-profile hidden" id="mobileNavProfile">
+                    <a href="user-dashboard.html">
+                        <img id="mobileNavProfilePicture" src="https://placehold.co/30x30/dce6f9/051747?text=U" alt="Profile">
+                        <span id="mobileNavUserName">User</span>
+                    </a>
+                </li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#" id="addNewToiletNav" onclick="navigateToAddToToilet()">Add New Toilet</a></li>
+                <li><a href="volunteer-page.html">Volunteer Help</a></li>
+                <li><a href="about-us.html">About</a></li>
+            </ul>
+            <div class="nav-buttons" id="auth-buttons">
+                <a href="login.html" class="btn-outline">Log in</a>
+                <a href="signup.html" class="btn-solid">Sign up</a>
+            </div>
+            <div class="navbar-profile-avatar hidden" id="navbarProfileAvatar">
+                <img id="navbarProfilePicture" src="https://placehold.co/40x40/dce6f9/051747?text=U" alt="Profile">
+                <div class="profile-dropdown-menu hidden" id="profileDropdownMenu">
+                    <a href="user-dashboard.html">Dashboard</a>
+                    <a href="#" onclick="logoutUser()">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="add-toilet-content" class="hidden">
+        <header class="header-banner">
+            <div class="header-content">
+                <h1>Add a New Public Toilet</h1>
+                <p>Help our community by adding new public toilet locations to our map. Pin the location and provide details!</p>
+            </div>
+        </header>
+
+        <div id="toiletMap" style="height: 400px; width: 100%;"></div>
+        <div class="container" style="max-width: 1200px; margin: 20px auto;">
+            <p style="text-align: center; font-size: 1.1rem; color: var(--steel-blue);">Click on the map to pinpoint the toilet's exact location.</p>
+        </div>
+
+        <div class="add-toilet-card-container">
+            <div class="add-toilet-card">
+                <form id="addToiletForm" class="add-toilet-form">
+                    <input type="hidden" id="latitude" name="latitude">
+                    <input type="hidden" id="longitude" name="longitude">
+
+                    <div class="form-group">
+                        <label for="toilet-name">Toilet Name</label>
+                        <input type="text" id="toilet-name" placeholder="e.g., Marikina City Hall Ground Floor CR" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" id="address" placeholder="e.g., Shoe Ave, Marikina City" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Features</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="features" value="Accessible"> Wheelchair Accessible</label>
+                            <label><input type="checkbox" name="features" value="Gender Neutral"> Gender-Neutral</label>
+                            <label><input type="checkbox" name="features" value="Baby Changing"> Baby Changing Station</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Initial Cleanliness Rating</label>
+                        <div class="rating">
+                            <input type="radio" id="star5" name="cleanliness" value="5"><label for="star5">★</label>
+                            <input type="radio" id="star4" name="cleanliness" value="4"><label for="star4">★</label>
+                            <input type="radio" id="star3" name="cleanliness" value="3"><label for="star3">★</label>
+                            <input type="radio" id="star2" name="cleanliness" value="2"><label for="star2">★</label>
+                            <input type="radio" id="star1" name="cleanliness" value="1"><label for="star1">★</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="comments">Additional Comments (Optional)</label>
+                        <textarea id="comments" rows="4" placeholder="e.g., Located near the main entrance, requires a fee..."></textarea>
+                    </div>
+                    <button type="submit">Submit for Review</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- This container is for GUESTS (the non-verified view) -->
+    <main id="login-prompt" class="hidden">
+        <h1>Want to Contribute Toilet Data?</h1>
+        <div class="info-box">
+            A publicly-accessible toilet is any toilet that the general public can use without being required to make a purchase or be a customer.
+        </div>
+        <p class="login-text">
+            To add or edit a public toilet you will first need to <a href="login.html">Log in</a> or <a href="signup.html">create an account</a>.
+        </p>
+        <div class="center-button">
+            <a href="login.html" class="login-signup-btn">Log In or Sign Up</a>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2025 PubliToilet. All rights reserved.
+    </footer>
+
+    <script src="add-new-toilet.js"></script>
+    <script>
+    // Dynamic show/hide for form or prompt
+    document.addEventListener('DOMContentLoaded', function() {
+        const user = getLoggedInUser && getLoggedInUser();
+        const addToiletContent = document.getElementById('add-toilet-content');
+        const loginPrompt = document.getElementById('login-prompt');
+        if (user) {
+            addToiletContent.classList.remove('hidden');
+            loginPrompt.classList.add('hidden');
+        } else {
+            addToiletContent.classList.add('hidden');
+            loginPrompt.classList.remove('hidden');
+        }
+    });
+
+    // Ensure nav link always uses the dynamic function
+    function navigateToAddToToilet() {
+        if (typeof navigateToAddToilet === "function") {
+            navigateToAddToilet();
+        } else {
+            window.location.href = 'add-new-toilet.html';
+        }
+    }
+    </script>
+</body>
+</html>

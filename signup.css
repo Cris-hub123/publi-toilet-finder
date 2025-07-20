@@ -1,0 +1,187 @@
+body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #191f27;
+            background-image: url('https://transequality.org/sites/default/files/2025-04/bathroom%20pic%20edit_0.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 50, 0.626);
+            z-index: -1;
+        }
+        .container {
+            display: flex;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 900px;
+            max-width: 90%;
+        }
+        .left-panel {
+            flex: 0.6;
+            background: linear-gradient(to bottom right,  #081f62, #3e5bb1);
+            color: #fff;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        .right-panel {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        h2 {
+            margin-bottom: 10px;
+            font-size: 2em;
+            color: #333;
+        }
+        p.social-login-text {
+            color: #777;
+            margin-bottom: 20px;
+        }
+        .social-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .social-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            color: #fff;
+            text-decoration: none;
+        }
+        .social-button.facebook { background-color: #3b5998; }
+        .social-button.google { background-color: #dd4b39; }
+        .social-button.linkedin { background-color: #007bb5; }
+        .or-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+        .or-divider::before,
+        .or-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #eee;
+        }
+        .or-divider:not(:empty)::before { margin-right: .25em; }
+        .or-divider:not(:empty)::after { margin-left: .25em; }
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            padding-right: 40px;
+            box-sizing: border-box;
+        }
+        .input-group .eye-icon-img {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.85em;
+            margin-top: 5px;
+            display: none;
+        }
+        .main-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #040765;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .main-button:hover { background-color: #1aa67e; }
+        .left-panel h3 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+        .left-panel p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        .login-button {
+            background-color: #fff;
+            color: #17a2b8;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            text-decoration: none;
+        }
+        .login-button:hover { background-color: #eee; }
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #28a745;
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1em;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            z-index: 1000;
+        }
+        .notification.error { background-color: #dc3545; }
+        .notification.show {
+            opacity: 1;
+            visibility: visible;
+        }

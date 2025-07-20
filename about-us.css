@@ -1,0 +1,874 @@
+:root {
+  --fefefe: #FEFEFE; /* From the provided image */
+  --e7e9f0: #E7E9F0; /* From the provided image */
+  --051747: #051747; /* From the provided image */
+  --535f80: #535F80; /* From the provided image */
+  --081f62: #081F62; /* From the provided image */
+  
+  /* Existing variables remapped or kept based on the new palette */
+  --light: var(--fefefe); /* Primary background for main content, very light */
+  --light-gray: var(--e7e9f0); /* Subtle background for sections, slightly off-white */
+  --dark-blue: var(--051747); /* Deep, formal blue for primary text and strong contrasts */
+  --steel-blue: var(--535f80); /* Muted blue-gray for secondary text and subtle elements */
+  --mid-blue: var(--081f62); /* Rich, solid blue for navigation bars and important sections */
+  
+  /* Accent colors derived from the provided palette or existing ones for interactivity */
+  --primary-blue: #005792; /* A professional, slightly vibrant blue for headlines and key features - kept from original for contrast */
+  --accent-blue: #4e7cf7; /* A bright, engaging blue for interactive elements, highlights, and call-to-actions - kept from original for vibrancy */
+
+  --hero-gradient: linear-gradient(90deg, #eaf1fb 0%, #f5f8fd 100%); /* Light, airy gradient for hero sections */
+  --section-gradient: linear-gradient(120deg, #f6f9fe 60%, var(--e7e9f0) 100%); /* Gentle gradient for content sections, explicitly using a blueish light-gray */
+  --shadow: 0 8px 32px rgba(8, 31, 98, 0.13), 0 1.5px 0 rgba(8, 31, 98, 0.08) inset; /* Subtle, professional shadow with a bluer tint */
+  --body-gradient: linear-gradient(180deg, var(--e7e9f0) 0%, var(--fefefe) 100%); /* Added new body gradient */
+}
+
+/* UNIVERSAL STYLES */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--dark-blue); /* Primary text color for overall readability */
+  margin: 0;
+  padding: 0;
+  line-height: 1.7;
+  background: var(--body-gradient); /* Applied the new gradient */
+}
+
+/* NAVIGATION BAR */
+.navbar {
+  background-color: var(--mid-blue);
+  color: white;
+  padding: 12px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.nav-logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.nav-logo i {
+  font-size: 1.2rem;
+}
+
+.nav-toggle {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: white;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    display: block;
+    font-weight: 500;
+}
+
+.nav-links li a:hover {
+    background-color: var(--steel-blue);
+}
+
+.nav-links .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 38px;
+  left: 0;
+  background-color: var(--dark-blue);
+  border-radius: 5px;
+  overflow: hidden;
+  min-width: 160px;
+  z-index: 1000;
+}
+
+.dropdown-menu li a {
+  padding: 10px 15px;
+  white-space: nowrap;
+}
+
+.dropdown.active .dropdown-menu {
+  display: block;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-outline, .btn-solid {
+    padding: 8px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-outline {
+    border: 2px solid white;
+    color: white !important;
+    background: transparent;
+}
+
+.btn-outline:hover {
+    background: white;
+    color: var(--mid-blue);
+    text-decoration: none;
+}
+
+.btn-solid {
+    background-color: #ffffff;
+    color: var(--dark-blue) !important;
+    border: none;
+    text-decoration: none;
+}
+
+.btn-solid:hover {
+    background-color: #f0f0f0;
+    text-decoration: none;
+}
+
+.navbar-profile-avatar {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: visible;
+    cursor: pointer;
+    border: 2px solid white;
+    transition: transform 0.2s ease;
+    display: block;
+}
+
+.navbar-profile-avatar:hover {
+    transform: scale(1.1);
+}
+
+.navbar-profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 50%;
+}
+
+.profile-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--mid-blue);
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    z-index: 100;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+
+.navbar-profile-avatar:hover .profile-dropdown-menu,
+.profile-dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.profile-dropdown-menu a {
+    color: white !important;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    transition: background-color 0.2s ease;
+}
+
+.profile-dropdown-menu a:hover {
+    background-color: var(--steel-blue);
+}
+
+.mobile-nav-profile {
+    display: none;
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.mobile-nav-profile a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    justify-content: center;
+}
+
+.mobile-nav-profile img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid white;
+}
+
+.mobile-profile-menu {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease, visibility 0.3s;
+}
+
+.mobile-profile-menu.active {
+    max-height: 100px;
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-profile-menu a {
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.mobile-profile-menu a:hover {
+    background-color: var(--steel-blue);
+}
+
+/* Utility class for hiding elements */
+.hidden {
+    display: none !important;
+}
+
+/* MEDIA QUERIES for Responsiveness */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+    display: none;
+    background-color: var(--mid-blue); /* Mid blue for expanded mobile nav */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding: 10px 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+
+  .nav-links.expanded {
+    display: flex;
+  }
+
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+    margin: 5px 0;
+  }
+
+  .nav-links a {
+    padding: 10px 0;
+  }
+
+  .nav-buttons {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  /* Show nav-buttons when navbar is expanded, for mobile */
+  .navbar.expanded .nav-buttons {
+    display: flex;
+  }
+
+  /* Specific styles for profile elements within the mobile expanded menu */
+  .navbar.expanded .nav-links .mobile-nav-profile {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+  }
+
+  .navbar.expanded .nav-links .navbar-profile-avatar {
+      display: none;
+  }
+
+  /* Adjustments for dropdowns on mobile if they exist */
+  .nav-links .dropdown-menu {
+      position: static;
+      width: 100%;
+      box-shadow: none;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      border-radius: 0;
+      margin-top: 5px;
+  }
+
+  .dropdown-menu li a {
+      padding: 10px 0;
+  }
+}
+
+/* HERO SECTION */
+.hero-banner {
+  background: url('https://www.enware.com.au/wp-content/uploads/Enw-Header-AS1428.1-1536x582-1.jpg') center/cover no-repeat;
+  box-shadow: 0 8px 32px rgba(8, 31, 98, 0.08); /* Softer shadow */
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0 0 36px 0;
+  padding: 64px 0 44px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 260px;
+}
+
+.hero-banner > div {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero-banner::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, var(--light-gray) 60%, transparent 100%); /* Light gray radial for subtle effect */
+  opacity: 0.4;
+  z-index: 0;
+}
+
+.hero-banner h1 {
+  font-size: 4.2rem;
+  font-weight: 900;
+  color: var(--dark-blue); /* Dark blue for main hero title */
+  letter-spacing: 1px;
+  margin-bottom: 0;
+  text-shadow: 0 4px 16px var(--light-gray), 0 1px 0 var(--light);
+}
+
+.hero-banner span {
+  color: var(--accent-blue); /* Accent blue for highlighted text in hero */
+  text-shadow: 0 4px 16px #b3c6f7, 0 1px 0 var(--light);
+}
+
+.hero-banner p {
+  margin-top: 18px;
+  font-size: 5rem;
+  color: white;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-banner .hero-cta {
+  margin-top: 32px;
+  display: inline-block;
+  background: var(--accent-blue); /* Accent blue for hero call to action button */
+  color: var(--light); /* Light text on hero CTA */
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 14px 38px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(8,31,98,0.08);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  border: none;
+}
+
+.hero-banner .hero-cta:hover {
+  background: var(--light); /* Light background on hover */
+  color: var(--accent-blue); /* Accent blue text on hover */
+  border: 2px solid var(--accent-blue); /* Accent blue border on hover */
+}
+
+.blue-bubble {
+ background-color: var(--dark-blue); /* Dark blue for special "bubble" elements */
+ padding: 5px 20px;
+ border-radius: 30px;
+ margin-right: 10px;
+ display: inline-block;
+ color: var(--light); /* Light text for blue bubble */
+}
+
+.section {
+  max-width: 1200px;
+  margin: 0 auto 36px auto;
+  background: var(--section-gradient);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 40px 38px;
+  position: relative;
+  overflow: hidden;
+}
+
+.section-title {
+  color: var(--mid-blue); /* Mid blue for section titles */
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 24px;
+  letter-spacing: 0.5px;
+  text-align: left;
+  text-shadow: 0 2px 8px var(--light-gray);
+  border-left: 6px solid var(--accent-blue); /* Accent blue vertical line for titles */
+  padding-left: 18px;
+}
+
+.section-content {
+  color: var(--steel-blue); /* Steel blue for general section content */
+  font-size: 1.13rem;
+  margin-bottom: 18px;
+  line-height: 1.8;
+  text-shadow: 0 0 1px rgba(8, 31, 98, 0.02); /* Subtle blue tint for paragraphs */
+}
+
+.section.alt-background {
+  background: var(--light-gray) !important; /* Light gray for alternate section background */
+  box-shadow: none;
+}
+
+.blue-title {
+  color: var(--mid-blue); /* Mid blue for generic blue titles */
+  font-size: 2.1rem;
+  font-weight: 800;
+  margin-bottom: 18px;
+  letter-spacing: 0.5px;
+  text-align: center;
+  text-shadow: 0 2px 8px var(--light-gray);
+}
+
+.section,
+.value-item,
+.what-we-do-item,
+.about-box {
+  background-clip: padding-box;
+}
+
+.section,
+.about-box {
+  color: var(--dark-blue); /* Dark blue for primary text in sections and about box */
+}
+
+.value-item,
+.what-we-do-item {
+  color: var(--mid-blue); /* Mid blue for text in value and what-we-do items */
+}
+
+a, a:visited {
+  color: var(--primary-blue); /* Primary blue for standard links */
+  text-decoration: none;
+}
+
+a:hover, a:focus {
+  color: var(--accent-blue); /* Accent blue for link hover/focus */
+  text-decoration: underline;
+  outline: none;
+}
+
+/* --- Values Grid --- */
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 32px;
+  margin: 32px 0 0 0;
+}
+
+.value-item {
+  background: var(--light); /* Light background for value items */
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(8,31,98,0.08);
+  padding: 28px 18px 20px 18px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 2px solid transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.value-item:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 32px rgba(8, 31, 98, 0.13);
+  border: 2px solid var(--accent-blue); /* Accent blue border on hover */
+}
+
+.value-circle {
+  width: 70px;
+  height: 70px;
+  background: var(--accent-blue); /* Accent blue for value icons background */
+  border-radius: 50%;
+  margin: 0 auto 14px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(8,31,98,0.08);
+}
+
+.value-circle img, .value-circle i {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  color: var(--light); /* Light color for icons inside value circles */
+  font-size: 2rem;
+}
+
+.value-item h3 {
+  color: var(--primary-blue); /* Primary blue for value item headings */
+  font-size: 1.18rem;
+  margin: 12px 0 8px 0;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.value-item p {
+  color: var(--steel-blue); /* Steel blue for value item paragraphs */
+  font-size: 1.01rem;
+  margin: 0;
+}
+
+/* About Box */
+.about-box {
+  background: var(--section-gradient);
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(8,31,98,0.06), 0 4px 12px rgba(8, 31, 98, 0.08); /* Added more prominent blue shadow */
+  padding: 32px 28px;
+  margin: 0 auto 24px auto;
+  font-size: 1.13rem;
+  color: var(--dark-blue); /* Dark blue for about box text */
+  max-width: 900px;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.8;
+  letter-spacing: 0.1px;
+}
+
+.about-learnmore-btn {
+  display: inline-block;
+  margin-top: 28px;
+  background: transparent;
+  color: var(--accent-blue); /* Accent blue for learn more button text */
+  font-weight: 700;
+  font-size: 1.08rem;
+  padding: 12px 32px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(8,31,98,0.08);
+  text-decoration: underline;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  border: 2px solid var(--accent-blue); /* Accent blue border for learn more button */
+}
+
+.about-learnmore-btn:hover {
+  background: var(--accent-blue); /* Accent blue background on hover */
+  color: var(--light); /* Light text on hover */
+  text-decoration: none;
+}
+
+/* Mission and Vision Sections */
+.mission-vision-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.mission-vision-section.reverse-order {
+    flex-direction: row-reverse;
+}
+
+.mission-vision-section .content-column {
+  flex: 2;
+  padding: 20px 24px; /* Increased padding for more breathing room */
+  min-width: 220px;
+  border-radius: 10px; /* Rounded corners to match image */
+  box-shadow: 0 2px 8px rgba(8, 31, 98, 0.05); /* Subtle shadow for depth */
+}
+
+.mission-vision-section .image-column {
+  flex: 1;
+  min-width: 180px;
+  padding: 10px 10px 10px 0;
+}
+
+.mission-vision-section img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(8,31,98,0.1);
+}
+
+.mission-vision-section h2.blue-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  margin-top: 0;
+  color: var(--mid-blue); /* Mid blue for mission/vision titles */
+}
+
+.mission-vision-section p {
+  font-size: 1.05rem;
+  margin: 0 0 8px 0;
+  color: var(--steel-blue); /* Steel blue for mission/vision paragraphs */
+}
+
+.what-we-do-item {
+  background: var(--light); /* Light background for what-we-do items */
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(8,31,98,0.08);
+  padding: 28px 18px;
+  text-align: center;
+  font-size: 1.09rem;
+  font-weight: 500;
+  color: var(--mid-blue); /* Mid blue for text in what-we-do items */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 2px solid transparent;
+  height: 100%;
+}
+
+.what-we-do-item:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 32px rgba(8, 31, 98, 0.13);
+  border: 2px solid var(--primary-blue); /* Primary blue border on hover */
+}
+
+.what-we-do-item img, .what-we-do-item i {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 14px;
+  object-fit: contain;
+  color: var(--accent-blue); /* Accent blue for what-we-do item icons */
+  font-size: 2.5rem;
+}
+
+.what-we-do-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+  justify-content: center;
+  margin-top: 36px;
+}
+
+.bg-blue {
+  background: linear-gradient(120deg, var(--e7e9f0) 60%, var(--fefefe) 100%); /* Light blue gradient for specific backgrounds */
+  color: var(--081f62); /* Mid blue text for these backgrounds */
+}
+
+.bg-brown {
+  background: linear-gradient(120deg, #f7e9e1 60%, var(--light-gray) 100%); /* Kept a warm tone for contrast but professional */
+  color: #7a4f1d; /* Original brown for contrast */
+}
+
+.what-we-do-item h4 {
+  color: var(--primary-blue); /* Primary blue for what-we-do item headings */
+  font-size: 1.08rem;
+  margin: 10px 0 6px 0;
+  font-weight: 700;
+}
+
+.what-we-do-item p {
+  color: var(--steel-blue); /* Steel blue for what-we-do item paragraphs */
+  font-size: 0.98rem;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.what-we-do-item a {
+  color: var(--accent-blue) !important; /* Accent blue for links within what-we-do items */
+  text-decoration: underline;
+  font-size: 0.98rem;
+  margin-top: 10px;
+  font-weight: 600;
+  background: none !important;
+  border: none !important;
+}
+
+.what-we-do-item a:hover {
+  color: var(--primary-blue) !important; /* Primary blue on hover for these links */
+  background: none !important;
+  border: none !important;
+}
+
+hr {
+  border: none;
+  border-top: 1.5px solid var(--primary-blue); /* Primary blue for horizontal rules */
+  margin-bottom: 30px;
+  width: 100%;
+  opacity: 0.4;
+}
+
+/* FOOTER STYLES */
+footer {
+  position:relative;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  z-index: 1;
+  background-color: var(--dark-blue);
+  color: white;
+  text-align: center;
+  padding: 20px 0 16px 0;
+  font-size: 0.9rem;
+  margin: 0;
+  box-shadow: 0 -2px 8px rgba(8,31,98,0.08);
+  pointer-events: auto;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 1100px) {
+  .section, .hero-banner {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .section {
+    padding: 24px 8px;
+  }
+  .hero-banner {
+    padding: 32px 0 18px 0;
+  }
+  .values-grid, .what-we-do-container {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero-banner {
+    border-radius: 0 0 18px 18px;
+    padding: 32px 0 18px 0;
+    min-height: 180px;
+  }
+  .hero-banner h1 {
+    font-size: 2rem;
+  }
+  .mission-vision-section {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .mission-vision-section .content-column {
+    padding: 15px 18px; /* Adjusted padding for smaller screens */
+  }
+  .mission-vision-section .image-column {
+    padding: 10px 10px 10px 0;
+  }
+}
+
+@media (max-width: 768px) {
+ .what-we-do-item {
+ flex: 1 1 100%;
+ }
+ .mission-vision-section .content-column,
+ .mission-vision-section .image-column {
+    padding: 10px;
+ }
+}
+
+@media (max-width: 700px) {
+  .hero-banner h1 {
+    font-size: 2rem;
+  }
+  .section-title {
+    font-size: 1.3rem;
+    padding-left: 10px;
+  }
+  .values-grid, .what-we-do-container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .about-box {
+    padding: 12px 2px;
+    font-size: 1rem;
+  }
+  .section {
+    padding: 12px 2px;
+  }
+  .hero-banner {
+    border-radius: 0 0 18px 18px;
+  }
+  .mission-vision-section .content-column {
+      order: 2;
+      text-align: center;
+      padding: 15px; /* Adjusted padding for very small screens */
+  }
+  .mission-vision-section .image-column {
+      order: 1;
+  }
+  .mission-vision-section.reverse-order .content-column {
+      order: 1;
+  }
+  .mission-vision-section.reverse-order .image-column {
+      order: 2;
+  }
+  .mission-vision-section h2.blue-title {
+      text-align: center !important;
+  }
+  .mission-vision-section p {
+      text-align: center !important;
+  }
+}
+
+/* --- Extra: Add subtle fade-in animation for cards --- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.section, .value-item, .what-we-do-item, .about-box {
+  animation: fadeInUp 0.7s cubic-bezier(.39,.575,.565,1) both;
+}

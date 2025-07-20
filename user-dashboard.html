@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Dashboard - PubliToilet</title>
+    <link rel="stylesheet" href="user-dashboard.css" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <!-- Navigation Bar: Dynamically updated by auth.js -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://ik.imagekit.io/kwck63nc2/513044424_1499354081036642_8891936477596511379_n.png" alt="PubliToilet Logo" style="height: 40px; vertical-align: middle; margin-right: 8px;"> PubliToilet
+            </div>
+            <div class="nav-toggle" onclick="toggleMenu()">☰</div>
+            <ul class="nav-links">
+                <li class="mobile-nav-profile hidden" id="mobileNavProfile">
+                    <a href="user-dashboard.html">
+                        <img id="mobileNavProfilePicture" src="https://placehold.co/30x30/dce6f9/051747?text=U" alt="Profile">
+                        <span id="mobileNavUserName">User</span>
+                    </a>
+                    <div class="mobile-profile-menu hidden" id="mobileProfileMenu">
+                        <a href="user-dashboard.html">Dashboard</a>
+                        <a href="#" onclick="logoutUser()">Logout</a>
+                    </div>
+                </li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="add-new-toilet.html">Add New Toilet</a></li>
+                <li><a href="volunteer-page.html">Volunteer Help</a></li>
+                <li><a href="about-us.html">About</a></li>
+            </ul>
+            <div class="nav-buttons" id="auth-buttons">
+                <a href="login.html" class="btn-outline">Log in</a>
+                <a href="signup.html" class="btn-solid">Sign up</a>
+            </div>
+            <div class="navbar-profile-avatar hidden" id="navbarProfileAvatar">
+                <img id="navbarProfilePicture" src="https://placehold.co/40x40/dce6f9/051747?text=U" alt="Profile">
+                <div class="profile-dropdown-menu hidden" id="profileDropdownMenu">
+                    <a href="user-dashboard.html">Dashboard</a>
+                    <a href="#" onclick="logoutUser()">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="dashboard-content">
+        <header class="dashboard-header">
+            <h1 class="header-title">My Dashboard</h1>
+            <p class="header-subtitle">Welcome back, <span id="userNameDisplay">User</span>!</p>
+        </header>
+
+        <section class="profile-volunteer-section">
+            <div class="profile-card">
+                <div class="profile-avatar">
+                    <label for="profilePictureUpload" class="avatar-upload-label" title="Click to change profile picture">
+                        <img id="profilePicture" src="https://placehold.co/100x100/dce6f9/051747?text=U" alt="User Avatar">
+                        <div class="upload-overlay"><i class="fas fa-camera"></i></div>
+                    </label>
+                     <input type="file" id="profilePictureUpload" accept="image/*" class="hidden-file-input">
+                </div>
+                <div class="profile-details">
+                    <h2 id="profileName">User Name</h2>
+                    <p id="profileEmail">user@email.com</p>
+                    <p class="member-since">Member Since: <span id="memberSince"></span></p>
+                    <div class="profile-actions">
+                        <button class="btn-solid edit-profile-btn">Edit Profile</button>
+                        <button class="btn-outline logout-btn" onclick="logoutUser()">Logout</button>
+                    </div>
+                    <button class="btn-outline recently-visited-btn" onclick="location.href='recent-visit.html'">Recently Visited Toilets</button>
+                </div>
+            </div>
+
+            <div class="volunteer-status-card">
+                <h3>Latest Volunteer Status</h3>
+                <div class="status-indicator not_applied" id="volunteerStatusIndicator"></div>
+                <p id="volunteerStatus">Status: Not Applied</p>
+                <p class="volunteer-message" id="volunteerMessage">Interested in helping? Become a volunteer today!</p>
+                <p class="volunteer-details-info" id="volunteerDetailsInfo"></p>
+                <button class="btn-outline volunteer-button" onclick="window.location.href='volunteer-page.html'">Become a Volunteer</button>
+            </div>
+        </section>
+
+        <section class="activity-contributions-section">
+            <h2>My Activity & Contributions</h2>
+            <div class="contribution-cards-container">
+                <div class="activity-card">
+                    <h3>Reports Submitted</h3>
+                    <div class="table-responsive">
+                        <table id="reportsSubmittedTable">
+                            <thead>
+                                <tr>
+                                    <th data-label="Toilet">Toilet</th>
+                                    <th data-label="Date">Date</th>
+                                    <th data-label="Status">Status</th>
+                                    <th data-label="Admin Response">Admin Response</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Dynamic content will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn-outline view-all-btn" onclick="window.location.href='report-page.html'">Submit a Report</button>
+                </div>
+
+                <div class="activity-card">
+                    <h3>Volunteer History</h3>
+                    <div class="table-responsive">
+                        <table id="volunteerHistoryTable">
+                            <thead>
+                                <tr>
+                                    <th data-label="Area">Area</th>
+                                    <th data-label="Applied On">Applied On</th>
+                                    <th data-label="Status">Status</th>
+                                    <th data-label="Admin Response">Admin Response</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Dynamic content will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn-outline view-all-btn" onclick="window.location.href='volunteer-page.html'">View Volunteer Page</button>
+                </div>
+
+                <div class="activity-card">
+                    <h3>Toilets Added</h3>
+                    <div class="table-responsive">
+                        <table id="toiletsAddedTable">
+                            <thead>
+                                <tr>
+                                    <th data-label="Toilet Name">Toilet Name</th>
+                                    <th data-label="Added On">Added On</th>
+                                    <th data-label="Status">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Dynamic content will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn-outline view-all-btn" onclick="window.location.href='add-new-toilet.html'">Add New Toilet</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Edit Profile Popup -->
+        <div id="editProfilePopup" class="edit-profile-popup hidden">
+          <div class="edit-profile-popup-content">
+            <span class="close-popup-btn" id="closeEditProfilePopup">&times;</span>
+            <h2>Edit Profile</h2>
+            <form id="editProfilePopupForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="popupEditName">Full Name / Username</label>
+                  <input type="text" id="popupEditName" name="name" required>
+                </div>
+                <div class="form-group">
+                  <label for="popupEditEmail">Email Address</label>
+                  <input type="email" id="popupEditEmail" name="email" required disabled>
+                </div>
+              </div>
+               <!-- For simplicity, other fields from the static HTML are removed, can be added back as needed -->
+              <div class="button-row">
+                <button type="submit" class="btn-solid">Save Changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2025 PubliToilet. All rights reserved.
+    </footer>
+
+    <script src="auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- 1. AUTHENTICATION CHECK ---
+            const user = getLoggedInUser();
+            if (!user) {
+                // If no user is logged in, redirect to the login page.
+                window.location.href = 'login.html';
+                return; // Stop script execution
+            }
+
+            // --- 2. RENDER DASHBOARD ---
+            renderDashboard(user);
+
+            // --- 3. EVENT LISTENERS ---
+            const editProfileBtn = document.querySelector('.edit-profile-btn');
+            const editProfilePopup = document.getElementById('editProfilePopup');
+            const closeEditProfilePopup = document.getElementById('closeEditProfilePopup');
+            const editProfilePopupForm = document.getElementById('editProfilePopupForm');
+            const profilePictureUpload = document.getElementById('profilePictureUpload');
+
+            editProfileBtn.addEventListener('click', () => {
+                // Pre-fill the popup form with current user data
+                document.getElementById('popupEditName').value = user.username;
+                document.getElementById('popupEditEmail').value = user.email;
+                editProfilePopup.classList.remove('hidden');
+            });
+
+            closeEditProfilePopup.addEventListener('click', () => {
+                editProfilePopup.classList.add('hidden');
+            });
+
+            // Handle profile update submission
+            editProfilePopupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const newUsername = document.getElementById('popupEditName').value;
+
+                // Find user in localStorage and update
+                let users = JSON.parse(localStorage.getItem('users'));
+                const userIndex = users.findIndex(u => u.email === user.email);
+
+                if (userIndex !== -1) {
+                    users[userIndex].username = newUsername;
+                    localStorage.setItem('users', JSON.stringify(users));
+                    showMessage('Profile updated successfully!');
+                    editProfilePopup.classList.add('hidden');
+                    // Re-render the dashboard to show the new name
+                    renderDashboard(users[userIndex]);
+                } else {
+                    showMessage('Error updating profile. User not found.', true);
+                }
+            });
+
+            // Handle profile picture upload
+            profilePictureUpload.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const newProfilePicDataUrl = e.target.result;
+
+                        // Update UI immediately
+                        document.getElementById('profilePicture').src = newProfilePicDataUrl;
+                        document.getElementById('navbarProfilePicture').src = newProfilePicDataUrl;
+                        document.getElementById('mobileNavProfilePicture').src = newProfilePicDataUrl;
+
+                        // Update in localStorage
+                        let users = JSON.parse(localStorage.getItem('users'));
+                        const userIndex = users.findIndex(u => u.email === user.email);
+                        if (userIndex !== -1) {
+                            users[userIndex].profilePictureUrl = newProfilePicDataUrl;
+                            localStorage.setItem('users', JSON.stringify(users));
+                            showMessage('Profile picture updated!');
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+
+        /**
+         * Renders all dynamic content on the dashboard based on user data.
+         * @param {object} user - The logged-in user's data object.
+         */
+        function renderDashboard(user) {
+            // --- Render Profile Card ---
+            document.getElementById('userNameDisplay').textContent = user.username;
+            document.getElementById('profileName').textContent = user.username;
+            document.getElementById('profileEmail').textContent = user.email;
+            document.getElementById('memberSince').textContent = formatDate(user.memberSince);
+            document.getElementById('profilePicture').src = user.profilePictureUrl || 'https://placehold.co/100x100/dce6f9/051747?text=U';
+
+            // --- Render Volunteer Status ---
+            const volunteerApplications = JSON.parse(localStorage.getItem('volunteer_applications')) || [];
+            const userApplications = volunteerApplications.filter(app => app.email === user.email).sort((a,b) => new Date(b.applicationDate) - new Date(a.applicationDate));
+            const latestApplication = userApplications.length > 0 ? userApplications[0] : null;
+
+            const volunteerStatusEl = document.getElementById('volunteerStatus');
+            const volunteerIndicatorEl = document.getElementById('volunteerStatusIndicator');
+            const volunteerMessageEl = document.getElementById('volunteerMessage');
+            const volunteerDetailsEl = document.getElementById('volunteerDetailsInfo');
+            const volunteerButton = document.querySelector('.volunteer-button');
+
+            volunteerIndicatorEl.className = 'status-indicator'; // Reset classes
+
+            if (latestApplication) {
+                volunteerStatusEl.textContent = `Status: ${latestApplication.status.charAt(0).toUpperCase() + latestApplication.status.slice(1)}`;
+                volunteerIndicatorEl.classList.add(latestApplication.status);
+                volunteerMessageEl.textContent = `Application for: ${latestApplication.area}`;
+                volunteerDetailsEl.textContent = latestApplication.adminResponse ? `Admin Response: ${latestApplication.adminResponse}` : 'Awaiting review from admin.';
+                volunteerButton.textContent = 'View Application Details';
+            } else {
+                volunteerStatusEl.textContent = 'Status: Not Applied';
+                volunteerIndicatorEl.classList.add('not_applied');
+                volunteerMessageEl.textContent = 'Interested in helping? Become a volunteer today!';
+                volunteerDetailsEl.textContent = '';
+                volunteerButton.textContent = 'Become a Volunteer';
+            }
+
+            // --- Render Activity Tables ---
+            const reports = JSON.parse(localStorage.getItem('reports')) || [];
+            const toilets = JSON.parse(localStorage.getItem('toilets')) || [];
+
+            const userReports = reports.filter(r => r.submittedBy === user.email);
+            const userToilets = toilets.filter(t => t.addedBy === user.email);
+            const userVolunteerHistory = volunteerApplications; // Already filtered
+
+            renderTable('#reportsSubmittedTable', userReports, ['toiletName', 'dateSubmitted', 'status', 'adminResponse']);
+            renderTable('#toiletsAddedTable', userToilets, ['name', 'dateAdded', 'status']);
+            renderTable('#volunteerHistoryTable', userVolunteerHistory, ['area', 'applicationDate', 'status', 'adminResponse']);
+        }
+
+        /**
+         * Generic function to render data into a table.
+         * @param {string} tableSelector - The CSS selector for the table.
+         * @param {Array} data - The array of data objects to render.
+         * @param {Array} columns - An array of keys to display in order.
+         */
+        function renderTable(tableSelector, data, columns) {
+            const tableBody = document.querySelector(`${tableSelector} tbody`);
+            tableBody.innerHTML = ''; // Clear existing rows
+
+            if (data.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="${columns.length}" class="no-data">No activity to display.</td></tr>`;
+                return;
+            }
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                let rowHTML = '';
+                columns.forEach(col => {
+                    let cellValue = item[col] || 'N/A';
+                    let cellClass = '';
+
+                    // Formatting for specific columns
+                    if (col.toLowerCase().includes('date')) {
+                        cellValue = formatDate(cellValue);
+                        cellClass = 'table-date';
+                    }
+                    if (col === 'status') {
+                        cellClass = `status-cell-${cellValue.toLowerCase().replace(/ /g, '-')}`;
+                        cellValue = cellValue.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
+                    }
+                     if (col === 'adminResponse' && !cellValue) {
+                        cellValue = 'No response yet.';
+                    }
+
+                    rowHTML += `<td data-label="${col}" class="${cellClass}">${cellValue}</td>`;
+                });
+                row.innerHTML = rowHTML;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function logoutUser() {
+    localStorage.removeItem('loggedInUser');
+    window.location.href = 'index.html';
+}
+    </script>
+</body>
+</html>

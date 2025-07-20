@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - PubliToilet</title>
+  <link rel="stylesheet" href="about-us.css" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Navigation Bar: Dynamically updated by auth.js -->
+  <nav class="navbar" id="navbar">
+      <div class="nav-container">
+          <div class="nav-logo">
+              <img src="https://ik.imagekit.io/kwck63nc2/513044424_1499354081036642_8891936477596511379_n.png" alt="PubliToilet Logo" style="height: 40px; vertical-align: middle; margin-right: 8px;">PubliToilet
+          </div>
+          <div class="nav-toggle" onclick="toggleMenu()">☰</div>
+          <ul class="nav-links">
+              <li class="mobile-nav-profile hidden" id="mobileNavProfile">
+                  <a href="user-dashboard.html">
+                      <img id="mobileNavProfilePicture" src="https://placehold.co/30x30/dce6f9/051747?text=U" alt="Profile">
+                      <span id="mobileNavUserName">User</span>
+                  </a>
+                  <div class="mobile-profile-menu hidden" id="mobileProfileMenu">
+                      <a href="user-dashboard.html">Dashboard</a>
+                      <a href="#" onclick="logoutUser()">Logout</a>
+                  </div>
+              </li>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="add-new-toilet.html">Add New Toilet</a></li>
+              <li><a href="volunteer-page.html">Volunteer Help</a></li>
+              <li><a href="about-us.html">About</a></li>
+          </ul>
+          <div class="nav-buttons" id="auth-buttons">
+              <a href="login.html" class="btn-outline">Log in</a>
+              <a href="signup.html" class="btn-solid">Sign up</a>
+          </div>
+          <div class="navbar-profile-avatar hidden" id="navbarProfileAvatar">
+              <img id="navbarProfilePicture" src="https://placehold.co/40x40/dce6f9/051747?text=U" alt="Profile">
+              <div class="profile-dropdown-menu hidden" id="profileDropdownMenu">
+                  <a href="user-dashboard.html">Dashboard</a>
+                  <a href="#" onclick="logoutUser()">Logout</a>
+              </div>
+          </div>
+      </div>
+  </nav>
+
+  <section class="hero-banner">
+    <div>
+      <h1>About <span>Us</span></h1>
+      <p style="margin-top: 10px; font-size: 16px;">
+        Learn about our mission, vision, values, services, and goals.
+      </p>
+    </div>
+  </section>
+
+  <section class="section alt-background">
+    <h2 class="blue-title" style="margin-bottom: 0;">Our Values</h2>
+    <p style="text-align: center; font-size: 14px; margin-top: 5px; color: var(--steel-blue);">
+      Principles that guide our work.
+    </p>
+    <div class="values-grid">
+      <div class="value-item">
+        <div class="value-circle"><img src="https://i.postimg.cc/WbxTyLLP/environment-removebg-preview.png" alt="Environmental Responsibility" /></div>
+        <h3>Environmental Responsibility</h3>
+        <p>Eco-friendly and water saving practices</p>
+      </div>
+      <div class="value-item">
+        <div class="value-circle"><img src="https://i.postimg.cc/cCrGDTFH/HANDS-removebg-preview.png" alt="Inclusivity" /></div>
+        <h3>Inclusivity</h3>
+        <p>Inclusive restroom access for all</p>
+      </div>
+      <div class="value-item">
+        <div class="value-circle"><img src="https://i.postimg.cc/0QKLDrjM/light-bulb-removebg-preview.png" alt="Transparency" /></div>
+        <h3>Transparency</h3>
+        <p>Honest, user-driven reviews and information</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="about-box">
+      <p>
+        PubliToilet is a student-led project created by a team at FEU Tech’s College of Computer Studies. Our web platform helps users find nearby public toilets, rate cleanliness, report issues to local authorities, and access hygiene education. Supporting UN Sustainable Development Goal 6, we promote accessible and inclusive sanitation through interactive maps, accessibility filters, a reporting system, and educational page.
+      </p>
+      <a href="read-more.html" class="about-learnmore-btn">Learn More</a>
+    </div>
+  </section>
+
+  <section class="section alt-background">
+    <div class="mission-vision-section">
+      <div class="image-column">
+        <img src="https://i.insider.com/5d7024482e22af3d8546d36e?width=700" alt="Toilet" />
+      </div>
+      <div class="content-column">
+        <h2 class="blue-title" style="text-align: left;">Our Mission</h2>
+        <p>
+          To provide a user-centered digital platform that ensures safe, clean, and accessible public toilets for all by enabling real-time location services, reporting tools, and educational resources—promoting hygiene, inclusivity, and public health in alignment with Sustainable Development Goal 6: Clean Water and Sanitation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt-background">
+    <div class="mission-vision-section reverse-order">
+      <div class="image-column">
+        <img src="https://content.sfstandard.com/wp-content/uploads/2024/01/featured_bathroomapp-080.jpg?fit=2048%2C2048" alt="Restroom" />
+      </div>
+      <div class="content-column">
+        <h2 class="blue-title" style="text-align: right;">Our Vision</h2>
+        <p style="text-align: right;">
+          To build a connected and empowered community where every individual has equal access to clean, well-maintained, and inclusive sanitation facilities—contributing to a healthier, more sustainable, and socially responsible society.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <hr />
+    <h2 class="blue-title">What We Do</h2>
+    <p style="text-align: center; font-size: 14px; color: var(--steel-blue);">Our service and goals.</p>
+    <div class="what-we-do-container">
+      <div class="what-we-do-item bg-blue">
+        <img src="https://play-lh.googleusercontent.com/cMyb7Vygstb-MRvxB4nJ3UiLOdt4uI80TK9MpqCOPfnVsAtz1OqfbUMT1Xh_Je6vgNo=w240-h480-rw" alt="Locate Icon" />
+        <h4>Locate Toilets</h4>
+        <p>We provide real-time location services to help you find nearby public toilets easily.</p>
+      </div>
+      <div class="what-we-do-item bg-brown">
+        <img src="https://i.postimg.cc/hGsG6y1b/Screenshot-2023-01-17-112105-1-removebg-preview.png" alt="Report Icon" />
+        <h4>Report Issues</h4>
+        <p>We enable users to report issues directly to local government units (LGUs) for development and maintenance.</p>
+      </div>
+      <div class="what-we-do-item bg-brown">
+        <img src="https://i.postimg.cc/NfjkzS8b/people-removebg-preview.png" alt="Community Icon" />
+        <h4>Community Feedback</h4>
+        <p>We empower the community to voice out for the betterment of sanitation through our rate and report system.</p>
+      </div>
+      <div class="what-we-do-item bg-blue">
+        <img src="https://knowsdgs.jrc.ec.europa.eu/themes/sdgs/assets/img/sdg6.png" alt="SDG Icon" />
+        <h4>Promote SDG 6</h4>
+        <p>Our platform actively promotes Sustainable Development Goal 6: Clean Water and Sanitation, contributing to global efforts.</p>
+        <a href="learnmore.html" style="color: white; margin-top: auto;">Read More →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 PubliToilet. All rights reserved.
+</footer>
+
+  <script src="auth.js"></script>
+  <script src="about-us.js"></script>
+
+// Add this to homepage, rate-page, report-page, volunteer-page, about-us, etc.
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get logged in user from localStorage
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const loggedInEmail = localStorage.getItem('loggedInUser');
+    const user = users.find(u => u.email === loggedInEmail);
+
+    const authButtons = document.getElementById('auth-buttons');
+    const navbarProfileAvatar = document.getElementById('navbarProfileAvatar');
+    const mobileNavProfile = document.getElementById('mobileNavProfile');
+    const mobileNavProfilePicture = document.getElementById('mobileNavProfilePicture');
+    const mobileNavUserName = document.getElementById('mobileNavUserName');
+    const navbarProfilePicture = document.getElementById('navbarProfilePicture');
+
+    if (user) {
+        // Hide login/signup buttons
+        if (authButtons) authButtons.classList.add('hidden');
+        // Show profile avatar
+        if (navbarProfileAvatar) navbarProfileAvatar.classList.remove('hidden');
+        if (mobileNavProfile) mobileNavProfile.classList.remove('hidden');
+        // Set profile picture and name
+        if (navbarProfilePicture) navbarProfilePicture.src = user.profilePictureUrl;
+        if (mobileNavProfilePicture) mobileNavProfilePicture.src = user.profilePictureUrl;
+        if (mobileNavUserName) mobileNavUserName.textContent = user.username;
+    } else {
+        // Show login/signup buttons
+        if (authButtons) authButtons.classList.remove('hidden');
+        // Hide profile avatar
+        if (navbarProfileAvatar) navbarProfileAvatar.classList.add('hidden');
+        if (mobileNavProfile) mobileNavProfile.classList.add('hidden');
+    }
+});
+</script>
+
+</body>
+</html>

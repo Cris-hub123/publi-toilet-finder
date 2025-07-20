@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recently Visited Toilets - PubliToilet</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="recent-visit.css" />
+</head>
+<body>
+
+<!-- Navigation Bar: Dynamically updated by auth.js -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <div class="nav-logo">
+      <img src="https://ik.imagekit.io/kwck63nc2/513044424_1499354081036642_8891936477596511379_n.png" alt="PubliToilet Logo" style="height: 40px; vertical-align: middle; margin-right: 8px;">PubliToilet
+    </div>
+    <div class="nav-toggle" onclick="toggleMenu()">☰</div>
+    <ul class="nav-links" id="navLinks">
+      <li class="mobile-nav-profile hidden" id="mobileNavProfile">
+        <a href="user-dashboard.html">
+          <img id="mobileNavProfilePicture" src="https://placehold.co/30x30/dce6f9/051747?text=U" alt="Profile">
+          <span id="mobileNavUserName">User</span>
+        </a>
+        <div class="mobile-profile-menu hidden" id="mobileProfileMenu">
+          <a href="user-dashboard.html">Dashboard</a>
+          <a href="#" onclick="logoutUser()">Logout</a>
+        </div>
+      </li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="add-new-toilet.html">Add New Toilet</a></li>
+      <li><a href="volunteer-page.html">Volunteer Help</a></li>
+      <li><a href="about-us.html">About</a></li>
+    </ul>
+    <div class="nav-buttons" id="auth-buttons">
+      <a href="login.html" class="btn-outline">Log in</a>
+      <a href="signup.html" class="btn-solid">Sign up</a>
+    </div>
+    <div class="navbar-profile-avatar hidden" id="navbarProfileAvatar">
+      <img id="navbarProfilePicture" src="https://placehold.co/40x40/dce6f9/051747?text=U" alt="Profile">
+      <div class="profile-dropdown-menu hidden" id="profileDropdownMenu">
+        <a href="user-dashboard.html">Dashboard</a>
+        <a href="#" onclick="logoutUser()">Logout</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="header">
+  <h1 class="header-title">
+    Recently Visited Toilets
+  </h1>
+</header>
+
+<!-- Content Section -->
+<main class="content" id="recent-visits-container">
+  <!-- Toilet cards will be dynamically inserted here -->
+</main>
+
+<footer>
+  &copy; 2025 PubliToilet. All rights reserved.
+</footer>
+
+<script src="auth.js"></script>
+<script>
+    function formatDate(date) {
+        // Format as MM/DD/YYYY
+        return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const user = getLoggedInUser && getLoggedInUser();
+        if (!user) {
+            showMessage('You must be logged in to see your recently visited toilets.', true);
+            setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+            return;
+        }
+
+        const container = document.getElementById('recent-visits-container');
+        const allToilets = JSON.parse(localStorage.getItem('toilets')) || [];
+        // For this prototype, we'll show all approved toilets as a stand-in for a real "visited" list.
+        const recentlyVisited = allToilets.filter(t => t.status === 'approved');
+
+        container.innerHTML = ''; // Clear any static content
+
+        if (recentlyVisited.length === 0) {
+            container.innerHTML = '<p style="text-align: center; font-size: 1.2rem; color: var(--steel-blue);">You have not visited any toilets yet. Go explore!</p>';
+            return;
+        }
+
+        recentlyVisited.forEach(toilet => {
+            const card = document.createElement('div');
+            card.className = 'toilet-card';
+            card.innerHTML = `
+                <div class="toilet-name">
+                    <i class="fas fa-toilet"></i>
+                    ${toilet.name}
+                </div>
+                <div class="toilet-details">
+                    <span class="location"><i class="fas fa-map-marker-alt"></i> ${toilet.address}</span>
+                    <span class="visited-on">Last Visited: ${formatDate(new Date())}</span>
+                </div>
+                <div class="action-buttons">
+                    <button class="rate-button" onclick="window.location.href='rate-page.html?toiletId=${toilet.id}'">Rate</button>
+                    <button class="report-button" onclick="window.location.href='report-page.html?toiletId=${toilet.id}'">Report</button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    });
+</script>
+<script src="recent-visit.js"></script>
+</body>
+</html>

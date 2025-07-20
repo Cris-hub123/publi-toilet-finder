@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Explore Toilets - PubliToilet</title>
+  <link rel="stylesheet" href="explore.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation Bar: Dynamically updated by auth.js -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="https://ik.imagekit.io/kwck63nc2/513044424_1499354081036642_8891936477596511379_n.png" alt="PubliToilet Logo" style="height: 40px; vertical-align: middle; margin-right: 8px;">PubliToilet
+      </div>
+      <div class="nav-toggle" onclick="toggleMenu()">☰</div>
+      <ul class="nav-links" id="navLinks">
+        <li class="mobile-nav-profile hidden" id="mobileNavProfile">
+          <a href="user-dashboard.html">
+            <img id="mobileNavProfilePicture" src="https://placehold.co/30x30/dce6f9/051747?text=U" alt="Profile">
+            <span id="mobileNavUserName">User</span>
+          </a>
+          <div class="mobile-profile-menu hidden" id="mobileProfileMenu">
+            <a href="user-dashboard.html">Dashboard</a>
+            <a href="#" onclick="logoutUser()">Logout</a>
+          </div>
+        </li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="add-new-toilet.html">Add New Toilet</a></li>
+        <li><a href="volunteer-page.html">Volunteer Help</a></li>
+        <li><a href="about-us.html">About</a></li>
+      </ul>
+      <div class="nav-buttons" id="auth-buttons">
+        <a href="login.html" class="btn-outline">Log in</a>
+        <a href="signup.html" class="btn-solid">Sign up</a>
+      </div>
+      <div class="navbar-profile-avatar hidden" id="navbarProfileAvatar">
+        <img id="navbarProfilePicture" src="https://placehold.co/40x40/dce6f9/051747?text=U" alt="Profile">
+        <div class="profile-dropdown-menu hidden" id="profileDropdownMenu">
+          <a href="user-dashboard.html">Dashboard</a>
+          <a href="#" onclick="logoutUser()">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header>
+    <h1>Toilet Directory</h1>
+    <div class="search-container">
+        <input type="search" id="searchBar" placeholder="Search by location or name..." class="search-bar" />
+        <button class="search-button">Search</button>
+    </div>
+  </header>
+
+  <main>
+    <h2>Available Facilities</h2>
+    <div class="card-container">
+      <section class="area-breakdown">
+        <div class="table-responsive">
+          <table id="toiletsTable">
+            <thead>
+              <tr>
+                <th>Location</th>
+                <th>Accessibility</th>
+                <th>Rating</th>
+                <th>Features</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Toilet data will be dynamically inserted here -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+      &copy; 2025 PubliToilet. All rights reserved.
+  </footer>
+
+  <script src="auth.js"></script>
+  <script src="explore.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const toilets = JSON.parse(localStorage.getItem('toilets')) || [];
+        const approvedToilets = toilets.filter(t => t.status === 'approved');
+        const tableBody = document.querySelector('#toiletsTable tbody');
+        const searchBar = document.getElementById('searchBar');
+
+        function renderTable(toiletsToRender) {
+            tableBody.innerHTML = ''; // Clear existing rows
+            if (toiletsToRender.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No toilets found.</td></tr>';
+                return;
+            }
+
+            toiletsToRender.forEach(toilet => {
+                const row = document.createElement('tr');
+                const featuresString = toilet.features.join(', ') || 'N/A';
+                const accessibility = toilet.features.includes('Accessible') ? '<i class="fas fa-wheelchair" style="color: var(--primary-blue);"></i> Accessible' : 'Standard';
+
+                row.innerHTML = `
+                    <td>${toilet.name}<br><small>${toilet.address}</small></td>
+                    <td>${accessibility}</td>
+                    <td>${toilet.rating || 'N/A'} ★</td>
+                    <td>${featuresString}</td>
+                    <td class="action-buttons">
+                        <button class="rate-button" onclick="window.location.href='rate-page.html?toiletId=${toilet.id}'">Rate</button>
+                        <button class="report-button" onclick="window.location.href='report-page.html?toiletId=${toilet.id}'">Report</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function filterToilets() {
+            const searchTerm = searchBar.value.toLowerCase();
+            const filtered = approvedToilets.filter(toilet =>
+                toilet.name.toLowerCase().includes(searchTerm) ||
+                toilet.address.toLowerCase().includes(searchTerm)
+            );
+            renderTable(filtered);
+        }
+
+        // Initial render
+        renderTable(approvedToilets);
+
+        // Event listener for the search bar
+        searchBar.addEventListener('keyup', filterToilets);
+        document.querySelector('.search-button').addEventListener('click', filterToilets);
+    });
+  </script>
+</body>
+</html>
